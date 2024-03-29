@@ -1,11 +1,48 @@
 import express from "express";
-import {registerController} from "../controller/authController.js"
+import {
+  registerController,
+  loginController,
+} from "../controller/authController.js";
+
+import { isAdmin, RequiresSignin } from "../middlewares/authMiddleware.js";
 // router object
 
 const router = express.Router();
 
 // routung
 
+// register route
 router.post("/register", registerController);
+
+// login route
+router.post("/login", loginController);
+
+
+
+
+
+
+
+
+
+
+
+
+// working ...RequiresSignin... 
+
+
+//test routes
+
+// router.get("/user", RequiresSignin, (req, res) => {
+//   return res.send({
+//     message: "User Logged in",
+//   });
+// });
+
+// router.get("/admin", RequiresSignin, isAdmin, (req, res) => {
+//   res.send({
+//     message: "admin Logged in",
+//   });
+// });
 
 export default router;
