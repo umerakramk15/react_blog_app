@@ -1,7 +1,4 @@
 import React from "react";
-import img1 from "../../../public/img1.svg";
-import img2 from "../../../public/img2.svg";
-import img3 from "../../../public/img3.svg";
 import img4 from "../../../public/img4.svg";
 import img5 from "../../../public/img5.svg";
 import img6 from "../../../public/img6.svg";
@@ -21,19 +18,18 @@ const blogdata = [
     img: img4,
   },
   {
-    title: "Train Or Bus Journey?Which one suits?",
+    title: "Best Website to research for your  next project",
     description:
-      "The choice between a train or bus journey depends on various factors such as the distance of the journey, the time available, the cost, and person ",
+      "Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs  ",
     date: "13 March 2023",
-    category: "Travel",
+    category: "DEVELOPMENT",
     img: img5,
   },
   {
-    title: "Train Or Bus Journey?Which one suits?",
+    title: "How to Be a Dancer in 2023 with proper skills?",
     description:
-      "The choice between a train or bus journey depends on various factors such as the distance of the journey, the time available, the cost, and person ",
-    date: "13 March 2023",
-    category: "Travel",
+      "Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment. survival strategies to ensure proactive ",
+    category: "Sports",
     img: img6,
   },
   {

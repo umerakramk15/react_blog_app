@@ -1,10 +1,7 @@
 import React from "react";
 import Container from "../Container/Container";
 import featued from "../../../public/featued.svg";
-import img1 from "../../../public/img1.svg";
-import img2 from "../../../public/img2.svg";
-import img3 from "../../../public/img3.svg";
-import Card from "../Card/Card";
+
 
 function Featured() {
   return (
@@ -39,35 +36,6 @@ function Featured() {
               </button>
             </div>
           </div>
-        </div>
-        <div className="flex flex-wrap md:justify-between justify-center items-center w-full h-auto py-10 my-20 gap-20 sm:gap-0 ">
-          <Card
-            img={img1}
-            category={"Travel"}
-            date={"13 March 2023"}
-            title={"8 Rules of Travelling In Sea You Need To Know"}
-            description={
-              "Travelling in sea has many advantages. Some of the advantages of transporting goods by sea include: you can ship large volumes at costs "
-            }
-          ></Card>
-          <Card
-            img={img2}
-            category={"Travel"}
-            date={"13 March 2023"}
-            title={"8 Rules of Travelling In Sea You Need To Know"}
-            description={
-              "Travelling in sea has many advantages. Some of the advantages of transporting goods by sea include: you can ship large volumes at costs "
-            }
-          ></Card>
-          <Card
-            img={img3}
-            category={"Travel"}
-            date={"13 March 2023"}
-            title={"8 Rules of Travelling In Sea You Need To Know"}
-            description={
-              "Travelling in sea has many advantages. Some of the advantages of transporting goods by sea include: you can ship large volumes at costs "
-            }
-          ></Card>
         </div>
       </Container>
     </div>

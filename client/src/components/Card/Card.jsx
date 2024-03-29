@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Card({ category, date, title, description, img }) {
   return (
@@ -16,8 +17,8 @@ function Card({ category, date, title, description, img }) {
         <p className="md:text-normal text-black font-thin lg:w-[90%] pt-3">
           {description}
         </p>
-        <button className="text-purple-500 mt-10 py-2 px-6 rounded-md border-2 border-purple-500 hover:bg-purple-500 hover:text-white transition-all">
-          Read More
+        <button className="text-purple-500 mt-10  rounded-md transition-all hover:text-purple-600 hover:text-xl">
+          <Link to={"/blog/post"}>Read More...</Link>
         </button>
       </div>
     </div>
