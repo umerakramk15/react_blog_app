@@ -17,19 +17,17 @@ router.post("/register", registerController);
 // login route
 router.post("/login", loginController);
 
+// Protected route
+router.get("/user-auth", RequiresSignin, (req, res) => {
+  res.status(200).send({ ok: true });
+});
 
+//admin Protected route
+router.get("/admin-auth", RequiresSignin, isAdmin, (req, res) => {
+  res.status(200).send({ ok: true });
+});
 
-
-
-
-
-
-
-
-
-
-// working ...RequiresSignin... 
-
+// working ...RequiresSignin...
 
 //test routes
 

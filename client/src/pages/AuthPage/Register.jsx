@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import Container from "../../components/Container/Container";
-
+import { FaLock } from "react-icons/fa";
+import { FaEnvelope } from "react-icons/fa";
 import axios from "axios";
+import { FaEyeSlash } from "react-icons/fa6";
 
+import Eyegif from "../../../public/eye.gif";
+import { FaFacebookF } from "react-icons/fa";
+import { RiGithubLine } from "react-icons/ri";
+import { FaGoogle } from "react-icons/fa";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/auth";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [auth, setAuth] = useAuth();
+  const navigate = useNavigate();
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -18,7 +29,7 @@ function Register() {
         "http://localhost:8000/api/v1/auth/register",
         { username, email, password, phone }
       );
-
+      navigate("/login");
       if (data?.sucess) {
         console.log("User Created");
       }
@@ -29,61 +40,145 @@ function Register() {
   return (
     <Layout>
       <Container>
-        <form onSubmit={handleRegister}>
-          <div className="form-group">
-            <input
-              type="name"
-              className="form-control"
-              value={username}
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Enter username"
-            />
+        <div className="flex flex-col w-full justify-center items-center py-28">
+          <div className=" border xl:w-[50%] lg:w-[70%] md:w-[90%] rounded-xl w-full">
+            <form
+              onSubmit={handleRegister}
+              className="flex flex-col  items-center h-auto pt-10 gap-y-5 px-2"
+            >
+              <h1 className="font-bold text-3xl pb-10">Login</h1>{" "}
+              <div className="form-group flex justify-start items-center p-3 border  sm:w-[60%] w-full">
+                <span>
+                  <FaEnvelope className="sm:text-xl text-purple-500" />
+                </span>
+                <input
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                  type="text"
+                  className=" py-1 px-3 focus:outline-none"
+                  id="exampleInputPassword1"
+                  placeholder="Enter username"
+                />
+              </div>
+              <div className="form-group flex justify-start items-center p-3 border  sm:w-[60%] w-full">
+                <span>
+                  <FaEnvelope className="sm:text-xl text-purple-500" />
+                </span>
+                <input
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  type="email"
+                  className=" py-1 px-3 focus:outline-none"
+                  id="exampleInputPassword1"
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div className="form-group flex justify-between items-center p-3 border  sm:w-[60%] w-full">
+                <div className="flex justify-center items-center">
+                  <span>
+                    <FaLock className=" sm:text-xl text-purple-500" />
+                  </span>
+                  <input
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    type={showPassword === false ? "password" : "text"}
+                    className=" py-1 px-3 focus:outline-none"
+                    id="exampleInputPassword1"
+                    placeholder="Enter your password"
+                  />
+                </div>
+                <div className="">
+                  {password.length > 0 ? (
+                    <>
+                      {showPassword === false ? (
+                        <>
+                          <FaEyeSlash
+                            className="text-2xl opacity-60 pr-2"
+                            onClick={(e) => {
+                              setShowPassword(!showPassword);
+                            }}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <img
+                            src={Eyegif}
+                            alt=""
+                            className="sm:w-9 rounded-full w-8"
+                            onClick={() => {
+                              setShowPassword(!showPassword);
+                            }}
+                          />
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
+              <div className="form-group flex justify-start items-center p-3 border  sm:w-[60%] w-full">
+                <span>
+                  <FaEnvelope className="sm:text-xl text-purple-500" />
+                </span>
+                <input
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
+                  type="tel"
+                  
+                  name="telephone"
+                  className=" py-1 px-3 focus:outline-none"
+                  id="telephone"
+                  placeholder="Enter your Phone"
+                />
+              </div>
+              <div className="flex justify-between items-center s sm:w-[60%] w-[90%] ">
+                <button
+                  type="submit"
+                  className="px-14 py-3 bg-purple-500 rounded-md text-white font-medium mt-4  mb-10"
+                >
+                  Register
+                </button>
+              </div>
+            </form>
+            <div className="mb-6 ">
+              <div className="flex w-full justify-center items-center text-black/70 font-semibold">
+                <h1>
+                  Do you have an account?{" "}
+                  <span className="text-purple-500 font-medium">
+                    <NavLink to={"/login"}>Login</NavLink>
+                  </span>
+                </h1>
+              </div>
+              <div className="flex justify-center items-center w-full h-auto">
+                <hr className="sm:w-[30%]  w-[20%]" />
+                <h1 className=" bg-white px-3 py-3 flex justify-center items-center text-xl font-semibold">
+                  or connect with
+                </h1>
+                <hr className="sm:w-[30%] w-[20%]" />
+              </div>
+              <div className="flex justify-center items-center py-4 space-x-5 w-full h-auto transition-all ease-linear">
+                <div className="border rounded-full p-2 border-purple-300 hover:bg-purple-500 transition-all ease-linear">
+                  <FaFacebookF className="text-2xl text-purple-500 hover:text-white w-auto" />
+                </div>
+                <div className="border rounded-full p-2 border-purple-300 hover:bg-purple-500 transition-all ease-linear">
+                  <RiGithubLine className="text-2xl text-purple-500 hover:text-white w-auto" />
+                </div>
+                <div className="border rounded-full p-2 border-purple-300 hover:bg-purple-500 transition-all ease-linear">
+                  <FaGoogle className="text-2xl text-purple-500 hover:text-white w-auto" />
+                </div>
+              </div>
+            </div>{" "}
           </div>
-          <div className="form-group">
-            <input
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              type="email"
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="email"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Password"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              value={phone}
-              onChange={(e) => {
-                setPhone(e.target.value);
-              }}
-              type="text"
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="phone"
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
+        </div>
       </Container>
     </Layout>
   );
