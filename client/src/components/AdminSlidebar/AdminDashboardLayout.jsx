@@ -7,7 +7,7 @@ function AdminDashboardLayout({ children }) {
       <AdminSlidebar />
 
       
-      <div className="bg-slate-100 w-full h-screen  p-4">
+      <div className="bg-slate-100 w-full h-full  p-4">
         <div>{children}</div>
       </div>
     </div>

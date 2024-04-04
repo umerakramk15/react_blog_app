@@ -9,7 +9,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { RxUpdate } from "react-icons/rx";
 import { IoMdSettings } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
-
+import { Link } from "react-router-dom";
 function AdminSlidebar() {
   const [blogActive, setBlogActive] = useState(false);
   const [menu, setMenu] = useState(true);
@@ -43,7 +43,7 @@ function AdminSlidebar() {
                   blogActive === true ? "md:block" : "hidden md:block"
                 } font-normal text-nowrap `}
               >
-                Overview
+                <Link to={"/dashboard/admin"}>Overview</Link>
               </li>
             </div>
 
@@ -85,7 +85,9 @@ function AdminSlidebar() {
                 <span>
                   <SiPowerpages className="text-black/70" />
                 </span>
-                <li className="font-normal text-nowrap ">Posts</li>
+                <li className="font-normal text-nowrap ">
+                  <Link to={"/dashboard/admin/posts"}>Posts</Link>
+                </li>
               </div>
               <div
                 className=" flex justify-start md:justify-start items-center gap-x-2"
@@ -94,7 +96,7 @@ function AdminSlidebar() {
                 <span>
                   <RxUpdate className="text-black/70" />
                 </span>
-                <li className="font-normal text-nowrap ">Update Post</li>
+                <li className="font-normal text-nowrap "><Link to={"/dashboard/admin/create-post"}>Create Post</Link></li>
               </div>
               <div
                 className=" flex justify-start md:justify-start items-center gap-x-2"
@@ -103,7 +105,9 @@ function AdminSlidebar() {
                 <span>
                   <MdCategory className="text-black/70" />
                 </span>
-                <li className="font-normal text-nowrap ">Categories</li>
+                <li className="font-normal text-nowrap ">
+                  <Link to={"/dashboard/admin/categories"}>Categories</Link>
+                </li>
               </div>
               <div
                 className=" flex justify-start md:justify-start items-center gap-x-2 pr-5"
@@ -112,7 +116,7 @@ function AdminSlidebar() {
                 <span>
                   <BiCategoryAlt className="text-black/70" />
                 </span>
-                <li className="font-normal text-nowrap ">Update category</li>
+                <li className="font-normal text-nowrap "><Link to={"/dashboard/admin/create-category"}>Create category </Link></li>
               </div>
             </div>
             <div className=" flex justify-start md:justify-start items-center gap-x-2">
