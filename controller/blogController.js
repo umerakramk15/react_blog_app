@@ -1,5 +1,5 @@
 import blogModel from "../models/blogModel.js";
-
+import slugify from "slugify";
 // create post blogs
 export const createBlogPostController = async (req, res) => {
   try {
@@ -10,8 +10,8 @@ export const createBlogPostController = async (req, res) => {
         message: "fields required",
       });
     }
-
-    const newBlog = new blogModel({ title, description, image });
+    const slug = slugify(title)
+    const newBlog = new blogModel({ title, description, image ,slug});
 
     await newBlog.save();
 

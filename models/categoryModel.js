@@ -1,26 +1,19 @@
 import mongoose from "mongoose";
 
-const blogSchema = new mongoose.Schema(
+const categorySchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: [true, "title is required"],
+      unique: true,
     },
     slug: {
       type: String,
       required: [true, "title is required"],
       unique: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
-    image: {
-      type: String,
-      required: true,
-    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("blog", blogSchema);
+export default mongoose.model("category", categorySchema);

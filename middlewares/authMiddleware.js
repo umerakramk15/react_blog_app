@@ -31,9 +31,6 @@ export const isAdmin = async (req, res, next) => {
     } else {
       next();
     }
-
-    req.user = decode;
-    next();
   } catch (error) {
     console.log(error);
     res.status(501).send({

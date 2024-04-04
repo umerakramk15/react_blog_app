@@ -11,7 +11,7 @@ import {
 } from "../controller/blogController.js";
 
 // create post
-router.post("/create-post", createBlogPostController);
+router.post("/create-post", RequiresSignin, isAdmin, createBlogPostController);
 
 // get all posts
 router.get("/all-post", getAllBlogPostController);
@@ -20,9 +20,19 @@ router.get("/all-post", getAllBlogPostController);
 router.get("/single-post/:id", getSingleBlogPostController);
 
 // update single post
-router.put("/update-post/:id", updateSingleBlogPostController);
+router.put(
+  "/update-post/:id",
+  RequiresSignin,
+  isAdmin,
+  updateSingleBlogPostController
+);
 
 // delete  post
-router.delete("/delete-post/:id", deleteleBlogPostController);
+router.delete(
+  "/delete-post/:id",
+  RequiresSignin,
+  isAdmin,
+  deleteleBlogPostController
+);
 
 export default router;
