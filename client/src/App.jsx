@@ -7,7 +7,7 @@ import Login from "./pages/AuthPage/Login";
 import Register from "./pages/AuthPage/Register";
 import PrivateRoute from "./components/Routes/private";
 import UserDashboard from "./pages/Dashboard/user/Dashboard";
-import AdminDashboard from "./pages/Dashboard/admin/Dashboard";
+import AdminDashboard from "./pages/Dashboard/admin/AdminDashboard";
 import AdminPrivateRoute from "./components/Routes/AdminPrivateRoute";
 function App() {
   return (
@@ -23,7 +23,8 @@ function App() {
       </Route>
       {/* Admin Private Routes */}
       <Route path="/dashboard" element={<AdminPrivateRoute />}>
-        <Route path="admin" element={<AdminDashboard />}></Route>
+      <Route path="admin" element={<AdminDashboard />}></Route>
+      
       </Route>
     </Routes>
   );
