@@ -25,13 +25,14 @@ router.post(
 router.get("/all-post", getAllBlogPostController);
 
 // get single post
-router.get("/single-post/:id", getSingleBlogPostController);
+router.get("/single-post/:slug", getSingleBlogPostController);
 
 // update single post
 router.put(
   "/update-post/:id",
-  RequiresSignin,
-  isAdmin,
+  // RequiresSignin,
+  // isAdmin,
+  formidable(),
   updateSingleBlogPostController
 );
 
@@ -42,7 +43,7 @@ router.delete(
   isAdmin,
   deleteleBlogPostController
 );
-// get single iamge 
-router.post("/get-post-photo/:id", getPostPhotoController);
+// get single iamge
+router.get("/get-post-photo/:id", getPostPhotoController);
 
 export default router;

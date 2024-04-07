@@ -1,13 +1,25 @@
-import React from 'react'
-import AdminDashboardLayout from "../../../components/AdminSlidebar/AdminDashboardLayout";
+import React from "react";
+
 function CreatePost() {
   return (
-    <AdminDashboardLayout>
-      <div className="flex flex-col justify-start w-full h-full gap-y-10">
-        <div>Create Post</div>
+    <div className=" w-[100%] h-[100%]">
+      <div className="grid grid-cols-12 gap-4">
+        {/* Add post  */}
+        <div className="grid col-span-8 w-full bg-slate-200">
+          {/* Inputs  */}
+          <h1 className="md:text-4xl">Add New Post</h1>
+          <form onSubmit="">
+            <div className="w-full">
+              <input type="text" />
+            </div>
+          </form>
+        </div>
+
+        {/* Publish  */}
+        <div className="grid col-span-4"></div>
       </div>
-    </AdminDashboardLayout>
-  )
+    </div>
+  );
 }
 
-export default CreatePost
+export default CreatePost;

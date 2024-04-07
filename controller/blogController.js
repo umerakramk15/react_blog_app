@@ -4,9 +4,9 @@ import fs from "fs";
 // create post blogs
 export const createBlogPostController = async (req, res) => {
   try {
-    const { title, description, category } = req.fields;
-    const { image } = req.files;
-    if (!title || !description || !image || !category) {
+    const { title, description1, description2, category, quote } = req.fields;
+    const { featuredImage, endImage } = req.files;
+    if (!title || !description1 || !quote || !category) {
       return res.status(200).send({
         success: false,
         message: "fields required",
@@ -15,9 +15,13 @@ export const createBlogPostController = async (req, res) => {
     const slug = slugify(title);
     const newBlog = new blogModel({ ...req.fields, slug });
 
-    if (image) {
-      newBlog.image.data = fs.readFileSync(image.path);
-      newBlog.image.contentType = image.type;
+    if (featuredImage) {
+      newBlog.featuredImage.data = fs.readFileSync(featuredImage.path);
+      newBlog.featuredImage.contentType = featuredImage.type;
+    }
+    if (endImage) {
+      newBlog.endImage.data = fs.readFileSync(endImage.path);
+      newBlog.endImage.contentType = endImage.type;
     }
 
     await newBlog.save();
@@ -40,7 +44,7 @@ export const createBlogPostController = async (req, res) => {
 // get all post blogs
 export const getAllBlogPostController = async (req, res) => {
   try {
-    const blogs = await blogModel.find({});
+    const blogs = await blogModel.find({}).populate("category").sort("-1");
 
     if (!blogs) {
       return res.status(200).send({
@@ -68,9 +72,9 @@ export const getAllBlogPostController = async (req, res) => {
 // get single post blogs
 export const getSingleBlogPostController = async (req, res) => {
   try {
-    const { id } = req.params;
-    console.log(id);
-    const blog = await blogModel.findById({ _id: id });
+    const { slug } = req.params;
+    
+    const blog = await blogModel.findOne({slug}).populate("category");
 
     if (!blog) {
       return res.status(200).send({
@@ -97,14 +101,25 @@ export const getSingleBlogPostController = async (req, res) => {
 // update single post blogs
 export const updateSingleBlogPostController = async (req, res) => {
   try {
-    const { title, description, image } = req.body;
+    const { title, description1, description2, category, quote } = req.fields;
+    const { featuredImage, endImage } = req.files;
     const { id } = req.params;
 
     const updatedBlog = await blogModel.findByIdAndUpdate(
       { _id: id },
-      { title, image, description },
+      { title, description1, description2, category, quote },
       { new: true }
     );
+    if (featuredImage) {
+      updatedBlog.featuredImage.data = fs.readFileSync(featuredImage.path);
+      updatedBlog.featuredImage.contentType = featuredImage.type;
+    }
+    if (endImage) {
+      updatedBlog.endImage.data = fs.readFileSync(endImage.path);
+      updatedBlog.endImage.contentType = endImage.type;
+    }
+
+    await updatedBlog.save();
 
     return res.status(200).send({
       success: true,
@@ -144,12 +159,22 @@ export const deleteleBlogPostController = async (req, res) => {
 export const getPostPhotoController = async (req, res) => {
   try {
     const { id } = req.params;
-    const postImage = await blogModel.findById(id).select("image");
+    const postImage = await blogModel
+      .findById(id)
+      .select("featuredImage endImage");
 
-    if (postImage.image.data) {
-      res.set("content-type", postImage.image.contentType);
+    const responseData = {};
+
+    if (postImage.featuredImage && postImage.featuredImage.data) {
+      res.set("content-type", postImage.featuredImage.contentType);
+      responseData.featuredImage = postImage.featuredImage.data;
     }
-    return res.status(200).send(postImage.image.data);
+    if (postImage.endImage && postImage.endImage.data) {
+      res.set("content-type", postImage.endImage.contentType);
+      responseData.endImage = postImage.endImage.data;
+    }
+
+    return res.status(200).send(responseData);
   } catch (error) {
     console.log(error);
     res.status(500).send({

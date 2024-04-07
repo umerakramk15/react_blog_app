@@ -7,12 +7,16 @@ import Login from "./pages/AuthPage/Login";
 import Register from "./pages/AuthPage/Register";
 import PrivateRoute from "./components/Routes/private";
 import UserDashboard from "./pages/Dashboard/user/Dashboard";
-import AdminDashboard from "./pages/Dashboard/admin/AdminDashboard";
+import Dashboard from "./pages/Dashboard/Admin/Dashboard";
+
 import AdminPrivateRoute from "./components/Routes/AdminPrivateRoute";
-import AllPost from "./pages/Dashboard/admin/AllPost";
-import CreatePost from "./pages/Dashboard/admin/CreatePost";
-import Categories from "./pages/Dashboard/admin/Categories"
-import CreateCategory from "./pages/Dashboard/admin/CreateCategory"
+import Navbar from "./pages/Dashboard/Admin/Navbar";
+import AllPosts from "./pages/Dashboard/Admin/AllPosts";
+import CreatePost from "./pages/Dashboard/Admin/CreatePost";
+import UpdatePost from "./pages/Dashboard/Admin/UpdatePost";
+import DeletePost from "./pages/Dashboard/Admin/DeletePost";
+import Overview from "./pages/Dashboard/Admin/Overview";
+
 function App() {
   return (
     <Routes>
@@ -27,11 +31,14 @@ function App() {
       </Route>
       {/* Admin Private Routes */}
       <Route path="/dashboard" element={<AdminPrivateRoute />}>
-        <Route path="admin" element={<AdminDashboard />}></Route>
-        <Route path="admin/create-post" element={<CreatePost />}></Route>{" "}
-        <Route path="admin/categories" element={<Categories />}></Route>{" "}
-        <Route path="admin/posts" element={<AllPost />}></Route>
-        <Route path="admin/create-category" element={<CreateCategory />}></Route>
+        <Route path="" element={<Navbar />}>
+          <Route path="admin" element={<Dashboard />}></Route>
+          <Route path="admin/posts" element={<AllPosts />}></Route>
+          <Route path="admin/create-post" element={<CreatePost />}></Route>
+          <Route path="admin/update-post" element={<UpdatePost />}></Route>
+          <Route path="admin/delete-post" element={<DeletePost />}></Route>
+          <Route path="admin/overview" element={<Overview />}></Route>
+        </Route>
       </Route>
     </Routes>
   );

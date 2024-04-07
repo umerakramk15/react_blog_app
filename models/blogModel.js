@@ -11,11 +11,23 @@ const blogSchema = new mongoose.Schema(
       required: [true, "title is required"],
       unique: true,
     },
-    description: {
+    description1: {
       type: String,
       required: true,
     },
-    image: {
+    quote: {
+      type: String,
+      required: true,
+    },
+    description2: {
+      type: String,
+      
+    },
+    featuredImage: {
+      data: Buffer,
+      contentType: String,
+    },
+    endImage: {
       data: Buffer,
       contentType: String,
     },
