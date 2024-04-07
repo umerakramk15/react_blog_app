@@ -7,6 +7,7 @@ import authRoute from "./routes/authRoute.js";
 import blogRoute from "./routes/blogRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import cors from "cors";
+import formidable from "express-formidable";
 // config env
 dotenv.config();
 

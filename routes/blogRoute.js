@@ -1,5 +1,6 @@
 import express from "express";
 const router = express.Router();
+import formidable from "express-formidable";
 
 import { isAdmin, RequiresSignin } from "../middlewares/authMiddleware.js";
 import {
@@ -8,10 +9,17 @@ import {
   getAllBlogPostController,
   getSingleBlogPostController,
   updateSingleBlogPostController,
+  getPostPhotoController,
 } from "../controller/blogController.js";
 
 // create post
-router.post("/create-post", RequiresSignin, isAdmin, createBlogPostController);
+router.post(
+  "/create-post",
+  RequiresSignin,
+  isAdmin,
+  formidable(),
+  createBlogPostController
+);
 
 // get all posts
 router.get("/all-post", getAllBlogPostController);
@@ -34,5 +42,7 @@ router.delete(
   isAdmin,
   deleteleBlogPostController
 );
+// get single iamge 
+router.post("/get-post-photo/:id", getPostPhotoController);
 
 export default router;

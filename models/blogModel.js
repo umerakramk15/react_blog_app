@@ -16,8 +16,13 @@ const blogSchema = new mongoose.Schema(
       required: true,
     },
     image: {
-      type: String,
+      data: Buffer,
+      contentType: String,
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: "category",
     },
   },
   { timestamps: true }
