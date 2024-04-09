@@ -73,8 +73,8 @@ export const getAllBlogPostController = async (req, res) => {
 export const getSingleBlogPostController = async (req, res) => {
   try {
     const { slug } = req.params;
-    
-    const blog = await blogModel.findOne({slug}).populate("category");
+
+    const blog = await blogModel.findOne({ slug }).populate("category");
 
     if (!blog) {
       return res.status(200).send({
@@ -156,25 +156,33 @@ export const deleteleBlogPostController = async (req, res) => {
   }
 };
 
-export const getPostPhotoController = async (req, res) => {
+export const getfeaturePhotoController = async (req, res) => {
   try {
     const { id } = req.params;
-    const postImage = await blogModel
-      .findById(id)
-      .select("featuredImage endImage");
+    const postImage = await blogModel.findById(id).select("featuredImage");
 
-    const responseData = {};
-
-    if (postImage.featuredImage && postImage.featuredImage.data) {
+    if (postImage.featuredImage) {
       res.set("content-type", postImage.featuredImage.contentType);
-      responseData.featuredImage = postImage.featuredImage.data;
+      return res.status(200).send(postImage.featuredImage.data);
     }
-    if (postImage.endImage && postImage.endImage.data) {
-      res.set("content-type", postImage.endImage.contentType);
-      responseData.endImage = postImage.endImage.data;
-    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error in Access single photo",
+      success: false,
+      error,
+    });
+  }
+};
+export const getEndPhotoController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const postImage = await blogModel.findById(id).select("endImage");
 
-    return res.status(200).send(responseData);
+    if (postImage.endImage) {
+      res.set("content-type", postImage.endImage.contentType);
+      return res.status(200).send(postImage.endImage.data);
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({

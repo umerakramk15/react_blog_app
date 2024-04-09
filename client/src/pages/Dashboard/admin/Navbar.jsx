@@ -104,7 +104,7 @@ export default function Navbar() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", overflow: "" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar className="bg-white text-black/70">
@@ -243,7 +243,7 @@ export default function Navbar() {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" className="bg-gray-100" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Outlet />
       </Box>

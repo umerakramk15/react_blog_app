@@ -8,7 +8,6 @@ import Register from "./pages/AuthPage/Register";
 import PrivateRoute from "./components/Routes/private";
 import UserDashboard from "./pages/Dashboard/user/Dashboard";
 import Dashboard from "./pages/Dashboard/Admin/Dashboard";
-
 import AdminPrivateRoute from "./components/Routes/AdminPrivateRoute";
 import Navbar from "./pages/Dashboard/Admin/Navbar";
 import AllPosts from "./pages/Dashboard/Admin/AllPosts";
@@ -17,7 +16,19 @@ import UpdatePost from "./pages/Dashboard/Admin/UpdatePost";
 import DeletePost from "./pages/Dashboard/Admin/DeletePost";
 import Overview from "./pages/Dashboard/Admin/Overview";
 
+// fetching all posts
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAllPostsData } from "./store/FetchAllPostSlice";
+import { useEffect } from "react";
+
 function App() {
+  const posts = useSelector((state) => state.allPost); // Ensure correct slice name
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllPostsData());
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<Home />}></Route>

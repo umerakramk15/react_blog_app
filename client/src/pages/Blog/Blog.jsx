@@ -1,90 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
-import img1 from "../../../public/img1.svg";
-import img2 from "../../../public/img2.svg";
-import img3 from "../../../public/img3.svg";
-import img4 from "../../../public/img4.svg";
-import img5 from "../../../public/img5.svg";
-import img6 from "../../../public/img6.svg";
-import img7 from "../../../public/img7.svg";
-import img8 from "../../../public/img8.svg";
-import img9 from "../../../public/img9.svg";
+
 import Container from "../../components/Container/Container";
 import Card from "../../components/Card/Card";
 import NewsLetter from "../../components/newsletter/NewsLetter";
+import CardSkeleton from "../../components/Card/CardSkeleton ";
+import { useSelector } from "react-redux";
+
 function Blog() {
-  const blogdata = [
-    {
-      title: "Train Or Bus Journey?Which one suits?",
-      description:
-        "The choice between a train or bus journey depends on various factors such as the distance of the journey, the time available, the cost, and person ",
-      date: "13 March 2023",
-      category: "Travel",
-      img: img4,
-    },
-    {
-      title: "Best Website to research for your  next project",
-      description:
-        "Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs  ",
-      date: "13 March 2023",
-      category: "DEVELOPMENT",
-      img: img5,
-    },
-    {
-      title: "How to Be a Dancer in 2023 with proper skills?",
-      description:
-        "Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment. survival strategies to ensure proactive ",
-      category: "Sports",
-      img: img6,
-    },
-    {
-      title: "Train Or Bus Journey?Which one suits?",
-      description:
-        "The choice between a train or bus journey depends on various factors such as the distance of the journey, the time available, the cost, and person ",
-      date: "13 March 2023",
-      category: "Travel",
-      img: img7,
-    },
-    {
-      title: "Train Or Bus Journey?Which one suits?",
-      description:
-        "The choice between a train or bus journey depends on various factors such as the distance of the journey, the time available, the cost, and person ",
-      date: "13 March 2023",
-      category: "Travel",
-      img: img8,
-    },
-    {
-      title: "Train Or Bus Journey?Which one suits?",
-      description:
-        "The choice between a train or bus journey depends on various factors such as the distance of the journey, the time available, the cost, and person ",
-      date: "13 March 2023",
-      category: "Travel",
-      img: img9,
-    },
-    {
-      title: "How to Be a Dancer in 2023 with proper skills?",
-      description:
-        "Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment. survival strategies to ensure proactive ",
-      category: "Sports",
-      img: img1,
-    },
-    {
-      title: "Train Or Bus Journey?Which one suits?",
-      description:
-        "The choice between a train or bus journey depends on various factors such as the distance of the journey, the time available, the cost, and person ",
-      date: "13 March 2023",
-      category: "Travel",
-      img: img2,
-    },
-    {
-      title: "Train Or Bus Journey?Which one suits?",
-      description:
-        "The choice between a train or bus journey depends on various factors such as the distance of the journey, the time available, the cost, and person ",
-      date: "13 March 2023",
-      category: "Travel",
-      img: img3,
-    },
-  ];
+  const posts = useSelector((state) => state.allPost.posts);
+
   return (
     <Layout>
       <Container>
@@ -103,18 +28,26 @@ function Blog() {
           </p>
         </div>
         <div className="flex flex-wrap md:justify-between justify-center items-center w-full h-auto py-10 my-20 gap-x-20 sm:gap-0">
-          {blogdata.map((bd, i) => (
+          {posts.length === 0 ? (
+            // Render skeleton if posts are not available
             <>
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+            </>
+          ) : (
+            // Render actual content if posts are available
+            posts.map((post, i) => (
               <Card
                 key={i}
-                img={bd.img}
-                category={bd.category}
-                date={bd.date}
-                title={bd.title}
-                description={bd.description}
-              ></Card>
-            </>
-          ))}
+                img={post._id}
+                category={post.category.title}
+                date={post.date}
+                title={post.title}
+                description={post.description1.substring(0, 100)}
+              />
+            ))
+          )}
         </div>
       </Container>
       <NewsLetter></NewsLetter>

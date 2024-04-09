@@ -5,7 +5,13 @@ function Card({ category, date, title, description, img }) {
   return (
     <div className="xl:w-[30%] lg:w-[30%] md:w-[47%] sm:w-[50%] w-[80%] m-3">
       <div>
-        <img src={img} alt="" className="w-full" />
+        <img
+          src={`${
+            import.meta.env.VITE_REACT_APP_API_LOCAL_HOST
+          }/api/v1/blog/photos_end/${img}`}
+          alt=""
+          className="w-full"
+        />
       </div>
       <div>
         <h1 className="text-normal text-blackfont-normal pt-6">

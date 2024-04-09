@@ -9,7 +9,8 @@ import {
   getAllBlogPostController,
   getSingleBlogPostController,
   updateSingleBlogPostController,
-  getPostPhotoController,
+  getfeaturePhotoController,
+  getEndPhotoController,
 } from "../controller/blogController.js";
 
 // create post
@@ -22,16 +23,16 @@ router.post(
 );
 
 // get all posts
-router.get("/all-post", getAllBlogPostController);
+router.get("/posts", getAllBlogPostController);
 
 // get single post
-router.get("/single-post/:slug", getSingleBlogPostController);
+router.get("/posts/:slug", getSingleBlogPostController);
 
 // update single post
 router.put(
   "/update-post/:id",
-  // RequiresSignin,
-  // isAdmin,
+  RequiresSignin,
+  isAdmin,
   formidable(),
   updateSingleBlogPostController
 );
@@ -44,6 +45,7 @@ router.delete(
   deleteleBlogPostController
 );
 // get single iamge
-router.get("/get-post-photo/:id", getPostPhotoController);
+router.get("/get-feature-photo/:id", getfeaturePhotoController);
+router.get("/photos_end/:id", getEndPhotoController);
 
 export default router;
