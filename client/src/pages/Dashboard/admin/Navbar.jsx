@@ -141,8 +141,7 @@ export default function Navbar() {
             "Dashboard ",
             "Posts",
             "Create Post",
-            "Update Post",
-            "Delete Post",
+            
           ].map((text, index) => (
             <Link
               to={`${
@@ -152,9 +151,7 @@ export default function Navbar() {
                   ? "/dashboard/admin/posts"
                   : index === 2
                   ? "/dashboard/admin/create-post"
-                  : index === 3
-                  ? "/dashboard/admin/update-post"
-                  : "/dashboard/admin/delete-post"
+                  : ""
               }`}
             >
               <ListItem key={text} disablePadding sx={{ display: "block" }}>

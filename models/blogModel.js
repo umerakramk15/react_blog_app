@@ -21,15 +21,13 @@ const blogSchema = new mongoose.Schema(
     },
     description2: {
       type: String,
-      
     },
     featuredImage: {
-      data: Buffer,
-      contentType: String,
+      type: String,
+      required: true,
     },
     endImage: {
-      data: Buffer,
-      contentType: String,
+      type: String,
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,

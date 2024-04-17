@@ -40,7 +40,7 @@ function Blog() {
             posts.map((post, i) => (
               <Card
                 key={i}
-                img={post._id}
+                img={post.featuredImage}
                 category={post.category.title}
                 date={post.date}
                 title={post.title}

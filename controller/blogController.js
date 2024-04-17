@@ -1,11 +1,12 @@
 import blogModel from "../models/blogModel.js";
 import slugify from "slugify";
 import fs from "fs";
+import { uploadFileOnCloudinary } from "../helpers/cloudinary.js";
 // create post blogs
 export const createBlogPostController = async (req, res) => {
   try {
-    const { title, description1, description2, category, quote } = req.fields;
-    const { featuredImage, endImage } = req.files;
+    const { title, description1, description2, category, quote } = req.body;
+
     if (!title || !description1 || !quote || !category) {
       return res.status(200).send({
         success: false,
@@ -13,23 +14,37 @@ export const createBlogPostController = async (req, res) => {
       });
     }
     const slug = slugify(title);
-    const newBlog = new blogModel({ ...req.fields, slug });
+
+    const featuredImageLocalPath = req.files?.featuredImage[0]?.path;
+    const endImageLocalPath = req.files?.endImage[0]?.path;
+
+    if (!featuredImageLocalPath) {
+      return res.status(200).send({
+        success: false,
+        message: "Featured Image Required",
+      });
+    }
+
+    // upload on cludinary
+
+    const featuredImage = await uploadFileOnCloudinary(featuredImageLocalPath);
+    const endImage = await uploadFileOnCloudinary(endImageLocalPath);
 
     if (featuredImage) {
-      newBlog.featuredImage.data = fs.readFileSync(featuredImage.path);
-      newBlog.featuredImage.contentType = featuredImage.type;
-    }
-    if (endImage) {
-      newBlog.endImage.data = fs.readFileSync(endImage.path);
-      newBlog.endImage.contentType = endImage.type;
+      console.log(featuredImage.url);
     }
 
-    await newBlog.save();
+    const post = await blogModel.create({
+      ...req.body,
+      featuredImage: featuredImage.url,
+      endImage: endImage.url,
+      slug,
+    });
 
     return res.status(200).send({
       success: true,
       message: "Created Post Successfully",
-      newBlog,
+      post,
     });
   } catch (error) {
     console.log(error);
@@ -101,41 +116,46 @@ export const getSingleBlogPostController = async (req, res) => {
 // update single post blogs
 export const updateSingleBlogPostController = async (req, res) => {
   try {
-    const { title, description1, description2, category, quote } = req.fields;
-    const { featuredImage, endImage } = req.files;
-    const { id } = req.params;
+    const { title, description1, description2, category, quote } = req.body;
 
-    const updatedBlog = await blogModel.findByIdAndUpdate(
-      { _id: id },
-      { title, description1, description2, category, quote },
-      { new: true }
-    );
-    if (featuredImage) {
-      updatedBlog.featuredImage.data = fs.readFileSync(featuredImage.path);
-      updatedBlog.featuredImage.contentType = featuredImage.type;
+    const slug = slugify(title);
+
+    const featuredImageLocalPath = req.files?.featuredImage[0]?.path;
+    const endImageLocalPath = req.files?.endImage[0]?.path;
+
+    if (featuredImageLocalPath) {
+      const featuredImage = await uploadFileOnCloudinary(
+        featuredImageLocalPath
+      );
     }
-    if (endImage) {
-      updatedBlog.endImage.data = fs.readFileSync(endImage.path);
-      updatedBlog.endImage.contentType = endImage.type;
+    if (endImageLocalPath) {
+      const endImage = await uploadFileOnCloudinary(endImageLocalPath);
     }
 
-    await updatedBlog.save();
+    // upload on cludinary
+
+    const post = await blogModel.find(req.params.slug,{
+      ...req.body,
+      featuredImage: featuredImage.url,
+      endImage: endImage.url,
+      slug,
+    });
 
     return res.status(200).send({
       success: true,
-      message: "updated Post Successfully",
-      updatedBlog,
+      message: "Created Post Successfully",
+      post,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Erorr while updating blog post",
+      message: "Erorr while creating blog post",
       error,
     });
   }
 };
-// update single post blogs
+// delete single post blogs
 export const deleteleBlogPostController = async (req, res) => {
   try {
     const { id } = req.params;
@@ -151,43 +171,6 @@ export const deleteleBlogPostController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Erorr while deleteing blog post",
-      error,
-    });
-  }
-};
-
-export const getfeaturePhotoController = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const postImage = await blogModel.findById(id).select("featuredImage");
-
-    if (postImage.featuredImage) {
-      res.set("content-type", postImage.featuredImage.contentType);
-      return res.status(200).send(postImage.featuredImage.data);
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "Error in Access single photo",
-      success: false,
-      error,
-    });
-  }
-};
-export const getEndPhotoController = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const postImage = await blogModel.findById(id).select("endImage");
-
-    if (postImage.endImage) {
-      res.set("content-type", postImage.endImage.contentType);
-      return res.status(200).send(postImage.endImage.data);
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "Error in Access single photo",
-      success: false,
       error,
     });
   }

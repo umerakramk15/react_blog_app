@@ -13,7 +13,7 @@ import Navbar from "./pages/Dashboard/Admin/Navbar";
 import AllPosts from "./pages/Dashboard/Admin/AllPosts";
 import CreatePost from "./pages/Dashboard/Admin/CreatePost";
 import UpdatePost from "./pages/Dashboard/Admin/UpdatePost";
-import DeletePost from "./pages/Dashboard/Admin/DeletePost";
+
 import Overview from "./pages/Dashboard/Admin/Overview";
 
 // fetching all posts
@@ -46,8 +46,7 @@ function App() {
           <Route path="admin" element={<Dashboard />}></Route>
           <Route path="admin/posts" element={<AllPosts />}></Route>
           <Route path="admin/create-post" element={<CreatePost />}></Route>
-          <Route path="admin/update-post" element={<UpdatePost />}></Route>
-          <Route path="admin/delete-post" element={<DeletePost />}></Route>
+          <Route path="admin/update-post/:slug" element={<UpdatePost />}></Route>
           <Route path="admin/overview" element={<Overview />}></Route>
         </Route>
       </Route>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import JoditEditor from "jodit-react";
+
 function CreatePost() {
   const [categories, setCategories] = useState([]);
   const [featuredImage, setFeaturedImage] = useState("");
@@ -31,6 +33,14 @@ function CreatePost() {
       postFormData.append("endImage", endImage);
       postFormData.append("featuredImage", featuredImage);
       postFormData.append("category", category);
+
+      console.log("title", title);
+      console.log("description1", description1);
+      console.log("description2", description2);
+      console.log("quote", quote);
+      console.log("endImage", endImage);
+      console.log("featuredImage", featuredImage);
+      console.log("category", category);
       const { data } = await axios.post(
         `${
           import.meta.env.VITE_REACT_APP_API_LOCAL_HOST
@@ -63,8 +73,33 @@ function CreatePost() {
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 type="text"
-                placeholder="Post Title . . . . "
+                placeholder="Title  "
                 className="w-full py-2 px-2 sm:text-xl font-medium"
+              />
+            </div>
+            <div>
+              <h1 className="py-4 text-xl md:text-2xl">Featured Image</h1>
+              <div className="w-[200px] rounded-2xl overflow-hidden">
+                {featuredImage && (
+                  <>
+                    <div>
+                      <img
+                        src={URL.createObjectURL(featuredImage)}
+                        alt="post_photo"
+                        height={"200px"}
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+              <input
+                type="file"
+                required
+                accept="image/*"
+                onChange={(e) => {
+                  setFeaturedImage(e.target.files[0]);
+                }}
+                className="p-2 bg-transparent border border-black rounded-md"
               />
             </div>
             <div className="w-full bg-white border rounded-lg">
@@ -73,27 +108,27 @@ function CreatePost() {
                 onChange={(e) => setQuote(e.target.value)}
                 required
                 type="text"
-                placeholder="Quote . . . . "
+                placeholder="Quote"
                 className="w-full py-2 px-2 sm:text-xl font-medium"
               />
             </div>
             <div className="w-full bg-white border rounded-lg">
-              <textarea
+              <JoditEditor
                 value={description1}
-                onChange={(e) => setDescription1(e.target.value)}
+                onBlur={(newContent) => setDescription1(newContent)}
+                onChange={(newContent) => {}}
                 type="text"
                 rows={5}
-                placeholder="Main Description . . . . "
                 className="w-full py-2 pr-8 pl-2 sm:text-xl font-medium"
               />
             </div>
             <div className="w-full bg-white border rounded-lg">
-              <textarea
+              <JoditEditor
                 value={description2}
-                onChange={(e) => setDescription2(e.target.value)}
+                onBlur={(newContent) => setDescription2(newContent)}
+                onChange={(newContent) => {}}
                 type="text"
                 rows={5}
-                placeholder="End Description . . . . "
                 className="w-full py-2 pr-8 pl-2 sm:text-xl font-medium"
               />
             </div>
@@ -121,30 +156,7 @@ function CreatePost() {
                 </div>
               </div>
             </div>
-            <div>
-              <div className="w-[200px] rounded-2xl overflow-hidden">
-                {featuredImage && (
-                  <>
-                    <div>
-                      <img
-                        src={URL.createObjectURL(featuredImage)}
-                        alt="post_photo"
-                        height={"200px"}
-                      />
-                    </div>
-                  </>
-                )}
-              </div>
-              <input
-                type="file"
-                required
-                accept="image/*"
-                onChange={(e) => {
-                  setFeaturedImage(e.target.files[0]);
-                }}
-                className="p-2 bg-transparent border border-black rounded-md"
-              />
-            </div>
+
             <div>
               <div className="w-[20%] rounded-2xl overflow-hidden">
                 {endImage && (

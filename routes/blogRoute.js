@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import formidable from "express-formidable";
-
+import { upload } from "../middlewares/multer.js";
 import { isAdmin, RequiresSignin } from "../middlewares/authMiddleware.js";
 import {
   createBlogPostController,
@@ -9,8 +9,6 @@ import {
   getAllBlogPostController,
   getSingleBlogPostController,
   updateSingleBlogPostController,
-  getfeaturePhotoController,
-  getEndPhotoController,
 } from "../controller/blogController.js";
 
 // create post
@@ -18,7 +16,10 @@ router.post(
   "/create-post",
   RequiresSignin,
   isAdmin,
-  formidable(),
+  upload.fields([
+    { name: "featuredImage", maxCount: 1 },
+    { name: "endImage", maxCount: 1 },
+  ]),
   createBlogPostController
 );
 
@@ -26,14 +27,18 @@ router.post(
 router.get("/posts", getAllBlogPostController);
 
 // get single post
-router.get("/posts/:slug", getSingleBlogPostController);
+router.get("/post/:slug", getSingleBlogPostController);
 
 // update single post
 router.put(
   "/update-post/:id",
-  RequiresSignin,
-  isAdmin,
-  formidable(),
+  upload.fields([
+    { name: "featuredImage", maxCount: 1 },
+    { name: "endImage", maxCount: 1 },
+  ]),
+  // RequiresSignin,
+  // isAdmin,
+  // formidable(),
   updateSingleBlogPostController
 );
 
@@ -44,8 +49,5 @@ router.delete(
   isAdmin,
   deleteleBlogPostController
 );
-// get single iamge
-router.get("/get-feature-photo/:id", getfeaturePhotoController);
-router.get("/photos_end/:id", getEndPhotoController);
 
 export default router;

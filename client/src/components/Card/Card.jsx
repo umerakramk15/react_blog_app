@@ -5,13 +5,7 @@ function Card({ category, date, title, description, img }) {
   return (
     <div className="xl:w-[30%] lg:w-[30%] md:w-[47%] sm:w-[50%] w-[80%] m-3">
       <div>
-        <img
-          src={`${
-            import.meta.env.VITE_REACT_APP_API_LOCAL_HOST
-          }/api/v1/blog/photos_end/${img}`}
-          alt=""
-          className="w-full"
-        />
+        <img src={img} className="w-full h-[500px] rounded-2xl" />
       </div>
       <div>
         <h1 className="text-normal text-blackfont-normal pt-6">
@@ -21,7 +15,7 @@ function Card({ category, date, title, description, img }) {
           {title}
         </h2>
         <p className="md:text-normal text-black font-thin lg:w-[90%] pt-3">
-          {description}
+         {description}
         </p>
         <button className="text-purple-500 mt-10  rounded-md transition-all hover:text-purple-600 hover:text-xl">
           <Link to={"/blog/post"}>Read More...</Link>
