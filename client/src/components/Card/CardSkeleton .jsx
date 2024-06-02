@@ -11,8 +11,7 @@ const CardSkeleton = () => (
         <div className="h-4 bg-gray-400 w-2/4 mb-6 animate-pulse"></div>
         <div className="h-4 bg-gray-400 w-1/4 mb-6 animate-pulse"></div>
         <div className="h-4 bg-gray-400 w-3/5 mb-6 animate-pulse"></div>
-        
-        
+      
       </div>
     </div>
   </div>

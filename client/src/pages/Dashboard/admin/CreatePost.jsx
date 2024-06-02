@@ -47,7 +47,7 @@ function CreatePost() {
         }/api/v1/blog/create-post`,
         postFormData
       );
-
+      window.location.reload();
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -113,23 +113,23 @@ function CreatePost() {
               />
             </div>
             <div className="w-full bg-white border rounded-lg">
-              <JoditEditor
+              <input
                 value={description1}
-                onBlur={(newContent) => setDescription1(newContent)}
-                onChange={(newContent) => {}}
+                onChange={(e) => setDescription1(e.target.value)}
+                required
                 type="text"
-                rows={5}
-                className="w-full py-2 pr-8 pl-2 sm:text-xl font-medium"
+                placeholder="description"
+                className="w-full py-2 px-2 sm:text-xl font-medium"
               />
             </div>
             <div className="w-full bg-white border rounded-lg">
-              <JoditEditor
+              <input
                 value={description2}
-                onBlur={(newContent) => setDescription2(newContent)}
-                onChange={(newContent) => {}}
+                onChange={(e) => setDescription2(e.target.value)}
+                required
                 type="text"
-                rows={5}
-                className="w-full py-2 pr-8 pl-2 sm:text-xl font-medium"
+                placeholder="description2"
+                className="w-full py-2 px-2 sm:text-xl font-medium"
               />
             </div>
             <div className="w-[90%]">
