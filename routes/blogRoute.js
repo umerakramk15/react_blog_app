@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-import formidable from "express-formidable";
 import { upload } from "../middlewares/multer.js";
 import { isAdmin, RequiresSignin } from "../middlewares/authMiddleware.js";
 import {
@@ -8,6 +7,7 @@ import {
   deleteleBlogPostController,
   getAllBlogPostController,
   getSingleBlogPostController,
+  updatePostImage,
   updateSingleBlogPostController,
 } from "../controller/blogController.js";
 
@@ -40,6 +40,15 @@ router.put(
   // isAdmin,
   // formidable(),
   updateSingleBlogPostController
+);
+
+router.put(
+  "/update-image/:slug",
+  updatePostImage
+  // upload.fields([
+  //   { name: "featuredImage", maxCount: 1 },
+  //   // { name: "endImage", maxCount: 1 },
+  // ]),
 );
 
 // delete  post

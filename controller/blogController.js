@@ -114,6 +114,24 @@ export const getSingleBlogPostController = async (req, res) => {
 };
 
 // update single post blogs
+export const updatePostImage = async (req, res) => {
+  try {
+    // const featuredImageLocalPath = req.files?.featuredImage[0]?.path;
+    // // const endImageLocalPath = req.files?.endImage[0]?.path;
+    res.send("Api Hit");
+    // console.log(featuredImageLocalPath);
+    // if (featuredImageLocalPath) {
+    //   return true;
+    // } else return false;
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Featured Image Not Updated",
+    });
+  }
+};
+
 export const updateSingleBlogPostController = async (req, res) => {
   try {
     const { title, description1, description2, category, quote } = req.body;
@@ -134,7 +152,7 @@ export const updateSingleBlogPostController = async (req, res) => {
 
     // upload on cludinary
 
-    const post = await blogModel.find(req.params.slug,{
+    const post = await blogModel.find(req.params.slug, {
       ...req.body,
       featuredImage: featuredImage.url,
       endImage: endImage.url,
@@ -160,7 +178,8 @@ export const deleteleBlogPostController = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await blogModel.findByIdAndDelete({ _id: id });
+    const data = await blogModel.findByIdAndDelete({ _id: id });
+    console.log(data);
 
     return res.status(200).send({
       success: true,

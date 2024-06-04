@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
-
+import axios from "axios";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 function AllPosts() {
   const posts = useSelector((state) => state.allPost.posts);
-  const navigate = useNavigate();
+
+  const deletePost = async (id) => {
+    try {
+      const data = await axios.delete(
+        `${
+          import.meta.env.VITE_REACT_APP_API_LOCAL_HOST
+        }/api/v1/blog/delete-post/${id}`
+      );
+      console.log(data)
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <h1 className="text-3xl text-center pt-20 text-black font-medium text-black/60">
@@ -43,7 +56,10 @@ function AllPosts() {
                       Update
                     </button>
                   </Link>
-                  <button className="py-2 px-10 border rounded-lg hover:bg-red-500 transition-all hover:text-white">
+                  <button
+                    className="py-2 px-10 border rounded-lg hover:bg-red-500 transition-all hover:text-white"
+                    onClick={()=>deletePost(post._id)}
+                  >
                     Delete
                   </button>
                 </div>

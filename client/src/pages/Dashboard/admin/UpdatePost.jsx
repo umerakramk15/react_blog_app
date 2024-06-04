@@ -90,7 +90,7 @@ function UpdatePost() {
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                required
+                
                 type="text"
                 placeholder="Title  "
                 className="w-full py-2 px-2 sm:text-xl font-medium"
@@ -123,7 +123,7 @@ function UpdatePost() {
               </div>
               <input
                 type="file"
-                required
+                
                 accept="image/*"
                 onChange={(e) => {
                   setFeaturedImage(e.target.files[0]);
@@ -135,30 +135,30 @@ function UpdatePost() {
               <input
                 value={quote}
                 onChange={(e) => setQuote(e.target.value)}
-                required
+                
                 type="text"
                 placeholder="Quote"
                 className="w-full py-2 px-2 sm:text-xl font-medium"
               />
             </div>
             <div className="w-full bg-white border rounded-lg">
-              <JoditEditor
+              <input
                 value={description1}
-                onBlur={(newContent) => setDescription1(newContent)}
-                onChange={(newContent) => {}}
+                onChange={(e) => setDescription1(e.target.value)}
+                
                 type="text"
-                rows={5}
-                className="w-full py-2 pr-8 pl-2 sm:text-xl font-medium"
+                placeholder="description"
+                className="w-full py-2 px-2 sm:text-xl font-medium"
               />
             </div>
             <div className="w-full bg-white border rounded-lg">
-              <JoditEditor
+              <input
                 value={description2}
-                onBlur={(newContent) => setDescription2(newContent)}
-                onChange={(newContent) => {}}
+                onChange={(e) => setDescription2(e.target.value)}
+                
                 type="text"
-                rows={5}
-                className="w-full py-2 pr-8 pl-2 sm:text-xl font-medium"
+                placeholder="description2"
+                className="w-full py-2 px-2 sm:text-xl font-medium"
               />
             </div>
             <div className="w-[90%]">
@@ -213,7 +213,7 @@ function UpdatePost() {
               </div>
               <input
                 type="file"
-                required
+                
                 accept="image/*"
                 onChange={(e) => {
                   setEndImage(e.target.files[0]);
