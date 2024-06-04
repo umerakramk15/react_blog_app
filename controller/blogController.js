@@ -1,9 +1,7 @@
 import blogModel from "../models/blogModel.js";
 import slugify from "slugify";
-import fs from "fs";
 import { uploadFileOnCloudinary } from "../helpers/cloudinary.js";
-import { url } from "inspector";
-import { send } from "process";
+
 // create post blogs
 export const createBlogPostController = async (req, res) => {
   try {
