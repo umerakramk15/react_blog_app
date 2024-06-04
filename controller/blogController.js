@@ -118,7 +118,6 @@ export const getSingleBlogPostController = async (req, res) => {
 // update single post blogs
 
 // 1) // update featured Image
-
 export const updateFeaturedImage = async (req, res) => {
   try {
     const featuredImageLocalPath = req.files?.featuredImage[0]?.path;
@@ -158,32 +157,63 @@ export const updateFeaturedImage = async (req, res) => {
   }
 };
 
+// 2) // update end Image
+
+export const updateEndImage = async (req, res) => {
+  try {
+    const endImageLocalPath = req.files?.endImage[0]?.path;
+
+    if (!endImageLocalPath) {
+      return res
+        .status(404)
+        .send({ success: false, message: "File not Uploaded" });
+    }
+
+    // file upload on cloudinary
+    const endImage = await uploadFileOnCloudinary(endImageLocalPath);
+
+    if (endImage) {
+      console.log(endImage.url);
+    }
+
+    const post = await blogModel.findByIdAndUpdate(
+      { _id: req.params.id },
+      {
+        endImage: endImage.url,
+      },
+      { new: true }
+    );
+
+    return res.status(200).send({
+      success: true,
+      message: "end Image updated",
+      post,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "End Image not api  hit or Not Updated",
+    });
+  }
+};
+
 export const updateSingleBlogPostController = async (req, res) => {
   try {
     const { title, description1, description2, category, quote } = req.body;
 
-    const slug = slugify(title);
-
-    const featuredImageLocalPath = req.files?.featuredImage[0]?.path;
-    const endImageLocalPath = req.files?.endImage[0]?.path;
-
-    if (featuredImageLocalPath) {
-      const featuredImage = await uploadFileOnCloudinary(
-        featuredImageLocalPath
-      );
-    }
-    if (endImageLocalPath) {
-      const endImage = await uploadFileOnCloudinary(endImageLocalPath);
-    }
-
-    // upload on cludinary
-
-    const post = await blogModel.find(req.params.slug, {
-      ...req.body,
-      featuredImage: featuredImage.url,
-      endImage: endImage.url,
-      slug,
-    });
+    const post = await blogModel.findByIdAndUpdate(
+      { _id: req.params.id },
+      {
+        title: title,
+        description1: description1,
+        description2: description2,
+        quote: quote,
+        slug: slugify(title),
+        category,
+      },
+      { new: true }
+    );
 
     return res.status(200).send({
       success: true,

@@ -7,6 +7,7 @@ import {
   deleteleBlogPostController,
   getAllBlogPostController,
   getSingleBlogPostController,
+  updateEndImage,
   updateFeaturedImage,
   updateSingleBlogPostController,
 } from "../controller/blogController.js";
@@ -32,20 +33,27 @@ router.get("/post/:slug", getSingleBlogPostController);
 // update single post
 router.put(
   "/update-post/:id",
-  upload.fields([
-    { name: "featuredImage", maxCount: 1 },
-    { name: "endImage", maxCount: 1 },
-  ]),
   // RequiresSignin,
   // isAdmin,
-  // formidable(),
+  
   updateSingleBlogPostController
 );
 
 router.put(
   "/update-featured-image/:id",
   upload.fields([{ name: "featuredImage", maxCount: 1 }]),
+  
+  RequiresSignin,
+  isAdmin,
   updateFeaturedImage
+);
+
+router.put(
+  "/update-end-image/:id",
+  upload.fields([{ name: "endImage", maxCount: 1 }]),
+  // RequiresSignin,
+  // isAdmin,
+  updateEndImage
 );
 
 // delete  post
