@@ -7,7 +7,7 @@ import {
   deleteleBlogPostController,
   getAllBlogPostController,
   getSingleBlogPostController,
-  updatePostImage,
+  updateFeaturedImage,
   updateSingleBlogPostController,
 } from "../controller/blogController.js";
 
@@ -43,12 +43,9 @@ router.put(
 );
 
 router.put(
-  "/update-image/:slug",
-  updatePostImage
-  // upload.fields([
-  //   { name: "featuredImage", maxCount: 1 },
-  //   // { name: "endImage", maxCount: 1 },
-  // ]),
+  "/update-featured-image/:id",
+  upload.fields([{ name: "featuredImage", maxCount: 1 }]),
+  updateFeaturedImage
 );
 
 // delete  post

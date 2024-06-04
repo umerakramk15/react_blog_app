@@ -2,6 +2,8 @@ import blogModel from "../models/blogModel.js";
 import slugify from "slugify";
 import fs from "fs";
 import { uploadFileOnCloudinary } from "../helpers/cloudinary.js";
+import { url } from "inspector";
+import { send } from "process";
 // create post blogs
 export const createBlogPostController = async (req, res) => {
   try {
@@ -114,20 +116,44 @@ export const getSingleBlogPostController = async (req, res) => {
 };
 
 // update single post blogs
-export const updatePostImage = async (req, res) => {
+
+// 1) // update featured Image
+
+export const updateFeaturedImage = async (req, res) => {
   try {
-    // const featuredImageLocalPath = req.files?.featuredImage[0]?.path;
-    // // const endImageLocalPath = req.files?.endImage[0]?.path;
-    res.send("Api Hit");
-    // console.log(featuredImageLocalPath);
-    // if (featuredImageLocalPath) {
-    //   return true;
-    // } else return false;
+    const featuredImageLocalPath = req.files?.featuredImage[0]?.path;
+
+    if (!featuredImageLocalPath) {
+      return res
+        .status(404)
+        .send({ success: false, message: "File not Uploaded" });
+    }
+
+    // file upload on cloudinary
+    const featuredImage = await uploadFileOnCloudinary(featuredImageLocalPath);
+
+    if (featuredImage) {
+      console.log(featuredImage.url);
+    }
+
+    const post = await blogModel.findByIdAndUpdate(
+      { _id: req.params.id },
+      {
+        featuredImage: featuredImage.url,
+      },
+      { new: true }
+    );
+
+    return res.status(200).send({
+      success: true,
+      message: "featured Image updated",
+      post,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Featured Image Not Updated",
+      message: "Featured Image not api  hit or Not Updated",
     });
   }
 };
