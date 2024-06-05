@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const postCommentModel = new mongoose.Schema(
   {
-    content: {
+    comment: {
       type: String,
     },
     postId: {

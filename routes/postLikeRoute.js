@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  postLikeCheckController,
   postLikeCountController,
   postLikeDeleteController,
   postLikeSetController,
@@ -8,7 +9,8 @@ import {
 const router = express.Router();
 
 router.post("/set-like/:postId/:userId", postLikeSetController);
-router.delete("/unset-like/:postId/:userId", postLikeDeleteController);
 router.get("/like-count/", postLikeCountController);
+router.get("/check-like/:postId/:userId", postLikeCheckController);
+router.delete("/unset-like/:postId/:userId", postLikeDeleteController);
 
 export default router;
