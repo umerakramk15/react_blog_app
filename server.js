@@ -5,7 +5,9 @@ import morgan from "morgan";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import blogRoute from "./routes/blogRoute.js";
+import postLikeRoute from "./routes/postLikeRoute.js"
 import categoryRoute from "./routes/categoryRoute.js";
+import commentRoute from "./routes/postCommentRoute.js"
 import cors from "cors";
 
 // config env
@@ -27,6 +29,8 @@ connectDB();
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/blog", blogRoute);
 app.use("/api/v1/category", categoryRoute);
+app.use("/api/v1/like", postLikeRoute);
+app.use("/api/v1/comment", commentRoute);
 
 // rest apies
 app.get("/", (req, res) => {
