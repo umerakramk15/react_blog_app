@@ -62,3 +62,26 @@ export const AddPostCommentController = async (req, res) => {
     });
   }
 };
+
+export const deletePostCommentController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const comment = await postCommentModel.findByIdAndDelete({ _id: id });
+    if (!comment)
+      return res.status(400).send({
+        success: false,
+        message: "Something Error to find comment",
+      });
+
+    return res.status(200).send({
+      success: true,
+      message: "Deleted SuccessFully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in Delete post comment Controller",
+    });
+  }
+};
